@@ -34,18 +34,22 @@ export function verifyToken(token) {
   return jwt.verify(token, JWT_SECRET, { algorithms: [ALG] });
 }
 
-/** Attach a JWT to the response as a secure httpOnly cookie. */
+
 export function setSessionCookie(res, token) {
   res.cookie(process.env.COOKIE_NAME || 'sl_token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // HTTPS-only in prod
-    sameSite: 'lax',                                // CSRF defense
-    maxAge: 15 * 60 * 1000,                         // 15 minutes
+    secure: true,          // Required for SameSite: 'none' (HTTPS only)
+    sameSite: 'none',      // Allows cross-domain cookies (Vercel -> Render)
+    maxAge: 15 * 60 * 1000,
     path: '/',
   });
 }
 
-/** Remove the cookie (logout). */
 export function clearSessionCookie(res) {
-  res.clearCookie(process.env.COOKIE_NAME || 'sl_token', { path: '/' });
+  res.clearCookie(process.env.COOKIE_NAME || 'sl_token', { 
+    path: '/',
+    secure: true,
+    sameSite: 'none'
+  });
 }
+
