@@ -1,0 +1,43 @@
+# Secure Login App
+
+Full-stack authentication system with 2FA and role-based access.
+
+## Stack
+- **Frontend:** Next.js 16 (App Router), TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express, MySQL, mysql2
+- **Auth:** JWT (httpOnly cookie), TOTP 2FA, Argon2id + salt + pepper
+
+## Roles
+- `inputer` — create data entries
+- `manager` — add inputers
+- `admin` — delete inputers, list users
+- `administrator` — full control including role changes
+
+## Quick start
+
+### Backend
+cd backend
+npm install
+cp .env.example .env   # fill in real values
+# Run sql/schema.sql in MySQL Workbench first
+npm run dev
+# → http://localhost:4000
+
+### Frontend
+cd frontend
+npm install
+npm run dev
+# → http://localhost:3000
+
+## Security features
+- Argon2id password hashing with per-user salt and global pepper
+- TOTP two-factor authentication (Google Authenticator)
+- JWT in httpOnly, SameSite=Lax cookies
+- Rate limiting on auth endpoints
+- Account lockout after 5 failed password attempts
+- Audit log of all security-relevant events
+- Parameterized SQL queries (no injection)
+- Helmet + CORS restrictions
+
+alice - StrongPass123!
+bob - StrongPass456!
