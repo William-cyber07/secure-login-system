@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Secure Login</string>
+    <string name="title_activity_main">Secure Login</string>
+    <string name="package_name">com.william.securelogin</string>
+    <string name="custom_url_scheme">com.william.securelogin</string>
+</resources>

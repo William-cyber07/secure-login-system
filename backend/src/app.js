@@ -18,10 +18,18 @@ app.set('trust proxy', 1);
 
 // --- Security middleware ---
 app.use(helmet());
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:3000',
+  'capacitor://localhost',
+  'http://localhost'
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true,
+  origin: allowedOrigins,
+  credentials: true, 
 }));
+
 app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 
