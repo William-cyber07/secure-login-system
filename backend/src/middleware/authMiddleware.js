@@ -8,7 +8,7 @@ import { findById } from '../models/userModel.js';
 export async function requireAuth(req, res, next) {
   try {
     const cookieName = process.env.COOKIE_NAME || 'sl_token';
-    const token = req.cookies?.[cookieName];
+    const token = req.headers.authorization?.split(' ')[1] || req.cookies?.[cookieName];
     if (!token) return res.status(401).json({ error: 'Authentication required' });
 
     const payload = verifyToken(token);
